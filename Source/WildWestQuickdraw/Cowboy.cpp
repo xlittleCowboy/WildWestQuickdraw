@@ -32,7 +32,7 @@ void ACowboy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	InputComponent->BindAction("Fire", IE_Pressed, this, &ACowboy::Fire);
+	//InputComponent->BindAction("Fire", IE_Pressed, this, &ACowboy::Fire);
 }
 
 void ACowboy::Fire()

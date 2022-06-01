@@ -35,6 +35,6 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	FVector GetStartProjectileDirection();
 	
-    UFUNCTION()
+    UFUNCTION(BlueprintCallable)
     void Fire();
 };
