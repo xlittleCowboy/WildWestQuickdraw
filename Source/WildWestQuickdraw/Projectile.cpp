@@ -3,7 +3,6 @@
 
 #include "Projectile.h"
 
-#include "EditorTutorial.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -16,12 +15,25 @@ AProjectile::AProjectile()
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+
+	GetMesh()->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 }
 
 // Called every frame
 void AProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
+	FVector NormalImpulse, const FHitResult& Hit)
+{
+	if (OtherActor != this && OtherComponent->IsSimulatingPhysics())
+	{
+		OtherComponent->AddImpulseAtLocation(GetProjectileMovementComponent()->Velocity * 100.0f, Hit.ImpactPoint);
+	}
+	
+	Destroy();
 }
 
 void AProjectile::FireInDirection(const FVector& ShootDirection)
