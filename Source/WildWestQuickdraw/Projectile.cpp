@@ -3,6 +3,7 @@
 
 #include "Projectile.h"
 
+#include "EditorTutorial.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -15,8 +16,6 @@ AProjectile::AProjectile()
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-
-	GetMesh()->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 }
 
 // Called every frame
