@@ -9,9 +9,31 @@
 /**
  * 
  */
+
+class UCowboyWidget;
+
 UCLASS()
 class WILDWESTQUICKDRAW_API AWildWestQuickdrawGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+protected:
+	UPROPERTY(EditAnywhere, Category = Widgets)
+		TSubclassOf<class UUserWidget> GameWidgetClass;
+
+	UPROPERTY()
+		UCowboyWidget* GameWidget;
+
+	int32 BottlesInLevel;
+	int32 HitedBottles;
+
+	int32 ShootedBullets;
+
+	virtual void BeginPlay() override;
+
+public:
+	void UpdateBulletText();
+	void UpdateBottleText();
+	void UpdateExternalCrosshairScale(float CurrentRestTime, float RestTime);
+	void UpdateAccuracyText();
 };

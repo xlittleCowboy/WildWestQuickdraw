@@ -3,6 +3,9 @@
 
 #include "Projectile.h"
 
+#include "Math/UnitConversion.h"
+#include <Runtime/Engine/Classes/Kismet/GameplayStatics.h>
+
 
 // Sets default values
 AProjectile::AProjectile()
@@ -28,16 +31,25 @@ void AProjectile::Tick(float DeltaTime)
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
 	FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (OtherActor != this && OtherComponent->IsSimulatingPhysics())
-	{
-		OtherComponent->AddImpulseAtLocation(GetProjectileMovementComponent()->Velocity * 100.0f, Hit.ImpactPoint);
-	}
+	//GetWorld()->SpawnActor<AActor>(ForceFieldClass, GetActorLocation(), GetActorRotation());
 	
+	if (OtherActor != this && OtherComponent->IsSimulatingPhysics())
+		OtherComponent->AddImpulseAtLocation(GetProjectileMovementComponent()->Velocity * 100.0f, Hit.ImpactPoint);
+
+	if (OtherActor->ActorHasTag("Bottle"))
+	{
+		ABottle* BottleRef = Cast<ABottle>(OtherActor);
+		if (BottleRef)
+		{
+			BottleRef->DestroyBottle();
+		}
+	}
+
 	Destroy();
 }
 
 void AProjectile::FireInDirection(const FVector& ShootDirection)
 {
-	GetProjectileMovementComponent()->Velocity = ShootDirection * GetProjectileMovementComponent()->InitialSpeed;
+	GetProjectileMovementComponent()->Velocity = ShootDirection.GetSafeNormal() * GetProjectileMovementComponent()->InitialSpeed;
 }
 
