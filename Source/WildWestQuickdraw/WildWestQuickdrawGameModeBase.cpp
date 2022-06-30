@@ -25,7 +25,6 @@ void AWildWestQuickdrawGameModeBase::BeginPlay()
 			GameWidget->AddToViewport();
 			UpdateBulletText();
 			UpdateBottleText();
-			UpdateAccuracyText();
 		}
 	}
 }
@@ -35,14 +34,15 @@ void AWildWestQuickdrawGameModeBase::UpdateBulletText()
 	ACowboy* CowboyRef = Cast<ACowboy>(GetWorld()->GetFirstPlayerController()->GetCharacter());
 	if (CowboyRef)
 	{
-		GameWidget->SetBulletText(CowboyRef->GetAmmo(), CowboyRef->GetMaxAmmo());
+		GameWidget->SetBulletInfo(CowboyRef->GetAmmo(), CowboyRef->GetMaxAmmo());
 	}
 }
 
-void AWildWestQuickdrawGameModeBase::UpdateBottleText()
+void AWildWestQuickdrawGameModeBase::UpdateBottleText(bool isHitted)
 {
-	HitedBottles++;
-	GameWidget->SetBottleText(HitedBottles, BottlesInLevel);
+	if (isHitted)
+		HitedBottles++;
+	GameWidget->SetBottleInfo(HitedBottles, BottlesInLevel);
 }
 
 void AWildWestQuickdrawGameModeBase::UpdateExternalCrosshairScale(float CurrentRestTime, float RestTime)
@@ -53,5 +53,25 @@ void AWildWestQuickdrawGameModeBase::UpdateExternalCrosshairScale(float CurrentR
 void AWildWestQuickdrawGameModeBase::UpdateAccuracyText()
 {
 	ShootedBullets++;
-	GameWidget->SetAccuracyText(ShootedBullets, HitedBottles, BottlesInLevel);
+	if (ShootedBullets > 0)
+		GameWidget->SetAccuracyInfo(((float)HitedBottles / (float)ShootedBullets) * 100.0f, GetWorld()->GetTimeSeconds());
+}
+
+void AWildWestQuickdrawGameModeBase::AddBottlesInlevel(int32 BottlesNum)
+{
+	if (BottlesNum >= 0)
+	{
+		BottlesInLevel += BottlesNum;
+		UpdateBottleText(false);
+	}
+}
+
+int32 AWildWestQuickdrawGameModeBase::GetHitedBottles()
+{
+	return HitedBottles;
+}
+
+int32 AWildWestQuickdrawGameModeBase::GetBottlesInlevel()
+{
+	return BottlesInLevel;
 }

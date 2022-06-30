@@ -33,7 +33,13 @@ protected:
 
 public:
 	void UpdateBulletText();
-	void UpdateBottleText();
+	void UpdateBottleText(bool isHitted = true);
 	void UpdateExternalCrosshairScale(float CurrentRestTime, float RestTime);
 	void UpdateAccuracyText();
+
+	UFUNCTION(BlueprintCallable)
+	void AddBottlesInlevel(int32 BottlesNum);
+
+	int32 GetHitedBottles();
+	int32 GetBottlesInlevel();
 };

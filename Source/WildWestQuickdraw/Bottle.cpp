@@ -4,7 +4,6 @@
 #include "Bottle.h"
 
 #include "Projects.h"
-#include <Runtime/Engine/Classes/Kismet/GameplayStatics.h>
 
 // Sets default values
 ABottle::ABottle()
@@ -18,8 +17,6 @@ ABottle::ABottle()
 void ABottle::BeginPlay()
 {
 	Super::BeginPlay();
-
-	
 }
 
 // Called every frame
@@ -27,6 +24,15 @@ void ABottle::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	GetMesh()->OnComponentHit.AddDynamic(this, &ABottle::OnHit);
+}
+
+void ABottle::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+	if (GetVelocity().Length() >= BreakSpeed)
+	{
+		DestroyBottle();
+	}
 }
 
 void ABottle::DestroyBottle()
@@ -39,4 +45,3 @@ void ABottle::DestroyBottle()
 		Destroy();
 	}
 }
-

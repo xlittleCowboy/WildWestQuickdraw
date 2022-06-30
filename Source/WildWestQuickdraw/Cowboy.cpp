@@ -124,7 +124,7 @@ void ACowboy::Fire()
 
 void ACowboy::Reload()
 {
-	GetWorldTimerManager().SetTimer(ReloadTimerHandle, this, &ACowboy::ReloadTimer, 0.5f, true, 0.5f);
+	GetWorldTimerManager().SetTimer(ReloadTimerHandle, this, &ACowboy::ReloadTimer, 0.5f, true, 0.75f);
 }
 
 int32 ACowboy::GetAmmo()

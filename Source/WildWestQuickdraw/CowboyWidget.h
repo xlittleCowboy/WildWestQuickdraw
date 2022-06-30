@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
 #include "CowboyWidget.generated.h"
 
 /**
@@ -16,14 +18,23 @@ class WILDWESTQUICKDRAW_API UCowboyWidget : public UUserWidget
 	
 public:
 	UFUNCTION(BlueprintImplementableEvent)
-		void SetBulletText(int32 RemainingBullets, int32 MaxBullets);
+		void SetBulletInfo(int32 RemainingBullets, int32 MaxBullets);
 
 	UFUNCTION(BlueprintImplementableEvent)
-		void SetAccuracyText(int32 ShootedBullets, int32 HitedBottles, int32 MaxBottles);
+		void SetAccuracyInfo(int32 Accuracy, float TimeInSeconds);
 
 	UFUNCTION(BlueprintImplementableEvent)
-		void SetBottleText(int32 HitedBottles, int32 MaxBottles);
+		void SetBottleInfo(int32 HitedBottles, int32 MaxBottles);
 
 	UFUNCTION(BlueprintImplementableEvent)
 		void SetExternalCrosshairScale(float CurrentRestTime, float RestTime);
+
+	UFUNCTION(BlueprintImplementableEvent)
+		TArray<FName> GetLevelsNames();
+
+	UFUNCTION(BlueprintCallable)
+		void LoadNextLevel();
+
+	UFUNCTION(BlueprintCallable)
+		void RestartLevel();
 };
