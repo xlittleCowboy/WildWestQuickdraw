@@ -18,7 +18,7 @@ void ABottleSpawner::BeginPlay()
 	
 	GameModeBaseRef = Cast<AWildWestQuickdrawGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 
-	GetWorldTimerManager().SetTimer(SpawnTimerHandle, this, &ABottleSpawner::SpawnTimer, 2.0f, true, 2.0f);
+	GetWorldTimerManager().SetTimer(SpawnTimerHandle, this, &ABottleSpawner::SpawnTimer, SpawnRate, true, SpawnRate);
 }
 
 // Called every frame

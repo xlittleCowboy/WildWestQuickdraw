@@ -29,7 +29,7 @@ void ABottle::Tick(float DeltaTime)
 
 void ABottle::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (GetVelocity().Length() >= BreakSpeed)
+	if (GetVelocity().Z >= BreakSpeed)
 	{
 		DestroyBottle();
 	}
